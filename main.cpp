@@ -30,7 +30,7 @@ Room(int number, string t, double price)
 
 
     virtual double calculateBill(int days) const = 0;
-    virtual void displayInfo() const = 0; 
+    virtual void displayInfo() const = 0;
     void bookRoom(){
         isavailable = false;
         cout << "Room booked successfully." << endl;
@@ -47,6 +47,9 @@ Room(int number, string t, double price)
      int getRoomNumber() const {
         return roomNumber;
     }
+void setPricePerDay(double newPrice) {
+    pricePerDay = newPrice;
+}
 
     double getPricePerDay() const {
         return pricePerDay;
@@ -66,9 +69,9 @@ class DeluxeRoom:public Room {
     vector<string> complementaryItems;
     public:
     DeluxeRoom(int number,  double price, double service, double tax)
-        : Room(number,"Deluxe", price){ 
+        : Room(number,"Deluxe", price){
         serviceFee = service;
-        luxuryTax = tax;    
+        luxuryTax = tax;
         }
     void addComplementaryItem(const string& item) {
         complementaryItems.push_back(item);
@@ -86,8 +89,8 @@ class DeluxeRoom:public Room {
         cout << "Service Fee: " << serviceFee << endl;
         cout << "Luxury Tax: " << luxuryTax << endl;
         cout << "Available: " << isRoomAvailable()  << endl;
-       
-         
+
+
     cout << "Features: ";
     for (const string& feature : getFeatures()) {
         cout << feature << ", ";
@@ -111,7 +114,7 @@ class SuiteRoom:public Room {
     SuiteRoom(int number,  double price, double service, double tax)
         : Room(number,"Suite", price){
         serviceFee = service;
-        luxuryTax = tax;    
+        luxuryTax = tax;
         }
     void addComplementaryItem(const string& item) {
         complementaryItems.push_back(item);
@@ -129,8 +132,8 @@ class SuiteRoom:public Room {
         cout << "Service Fee: " << serviceFee << endl;
         cout << "Luxury Tax: " << luxuryTax << endl;
         cout << "Available: " << isRoomAvailable()  << endl;
-       
-         
+
+
     cout << "Features: ";
     for (const string & feature : getFeatures()) {
         cout << feature << ", ";
@@ -144,13 +147,13 @@ class SuiteRoom:public Room {
     }
 
 };
-/**3. Customer 
- Attributes: name, contact, idNumber, bookedRoomNumber, daysOfStay, checkInDate, 
-checkOutDate, loyaltyPoints 
- Methods: 
-o assignRoom(Room* r, int days) 
-o displayCustomerDetails() 
-o generateInvoice() 
+/**3. Customer
+ Attributes: name, contact, idNumber, bookedRoomNumber, daysOfStay, checkInDate,
+checkOutDate, loyaltyPoints
+ Methods:
+o assignRoom(Room* r, int days)
+o displayCustomerDetails()
+o generateInvoice()
 o void updateLoyaltyPoints( */
 class customer{
     private:
@@ -206,8 +209,8 @@ class customer{
         cout << "Total Bill: $" << totalBill << endl;
     }
     void updateLoyaltyPoints() {
-        loyaltyPoints += daysOfStay * 10; 
-        
+        loyaltyPoints += daysOfStay * 10;
+
         cout << "Loyalty points updated. Current points: " << loyaltyPoints << endl;
     }
     int getDaysOfStay() const {
@@ -237,18 +240,18 @@ string checkinDate() const {
     int getLoyaltyPoints() const {
         return loyaltyPoints;
     }
-    
 
-    
+
+
 };
 
-/**4. Booking 
- Attributes: bookingID, Customer, Room, bookingDate, checkOutDate, totalBill, 
-status 
- Methods: 
-o confirmBooking() 
-o cancelBooking() 
-o modifyBookingDetails() 
+/**4. Booking
+ Attributes: bookingID, Customer, Room, bookingDate, checkOutDate, totalBill,
+status
+ Methods:
+o confirmBooking()
+o cancelBooking()
+o modifyBookingDetails()
 o displayBookingDetails() */
 
 
@@ -297,7 +300,7 @@ class Booking{
 
     void modifyBookingDetails(int newDays) {
        newDays = newDays + cust.getDaysOfStay();
-       
+
 
         // Update customer's days of stay
         cust.setDaysOfStay(newDays);
@@ -317,37 +320,246 @@ class Booking{
         cout << "Status: " << status << endl;
     }
 
+string getCustomerName() const { return cust.getName(); }
+
+     string getStatus(){
+     return status;
+     }
+
 };
 int Booking::nextBookingID = 1;
-int main() {
-    // Create a Deluxe Room
-    DeluxeRoom d1(101, 250.0, 40.0, 30.0);
-    d1.addFeature("Sea View");
-    d1.addFeature("Flat TV");
-    d1.addComplementaryItem("Breakfast");
 
-    // Create a Customer
-    customer c1("Alice", "03001234567", "CNIC001", 0, 3, "2025-06-02", "2025-06-05");
 
-    // Assign room to customer (this also sets room as booked)
-    c1.assignRoom(d1, 3);
 
-    // Create a Booking for this customer and room
-    Booking b1(c1, &d1);
-    b1.confirmBooking();           // Confirm booking
-    b1.displayBookingDetails();    // Show details
 
-    cout << "\n--- Modifying booking to 5 days ---\n";
-    b1.modifyBookingDetails(5);    // Update stay duration
-    b1.displayBookingDetails();    // Show updated details
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
 
-    cout << "\n--- Cancelling booking ---\n";
-    b1.cancelBooking();            // Cancel it
-    b1.displayBookingDetails();    // Show final state
+class Hotel {
+private:
+    vector<Room*> list_of_rooms;
+    vector<customer> list_of_customers;
+    vector<Booking> list_of_bookings;
 
-    return 0;
+public:
+    void addRoom(Room* room) {
+        list_of_rooms.push_back(room);
+        cout << "Room added successfully.\n";
+    }
+
+    void listAvailableRooms(string filterByFeature = "") {
+        cout << "\nAvailable Rooms:\n";
+        for (Room* room : list_of_rooms) {
+            if (room->isRoomAvailable()) {
+                if (filterByFeature.empty()) {
+                    room->displayInfo();
+                } else {
+                    for (string feature : room->getFeatures()) {
+                        if (feature == filterByFeature) {
+                            room->displayInfo();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void bookRoom(customer cust, string roomType) {
+        for (Room* room : list_of_rooms) {
+            if (room->getRoomType() == roomType && room->isRoomAvailable()) {
+                cust.assignRoom(*room, cust.getDaysOfStay());
+                Booking booking(cust, room);
+                booking.confirmBooking();
+                list_of_customers.push_back(cust);
+                list_of_bookings.push_back(booking);
+                return;
+            }
+        }
+        cout << "No available room found for type: " << roomType << endl;
+    }
+
+    void checkOutCustomer(string customerName) {
+        for (Booking& booking : list_of_bookings) {
+            if (booking.getCustomerName() == customerName && booking.getStatus() == "Confirmed") {
+                booking.cancelBooking();  // Change to checkout logic if needed
+                return;
+            }
+        }
+        cout << "No active booking found for customer: " << customerName << endl;
+    }
+
+    void generateReport(string reportType) {
+        if (reportType == "customers") {
+            cout << "\nCustomer Report:\n";
+            for (const customer& cust : list_of_customers) {
+                cust.displayCustomerDetails();
+            }
+        } else if (reportType == "bookings") {
+            cout << "\nBooking Report:\n";
+            for (const Booking& b : list_of_bookings) {
+                b.displayBookingDetails();
+            }
+        } else {
+            cout << "Unknown report type: " << reportType << endl;
+        }
+    }
+
+    void filterRoomsByPriceRange(double minPrice, double maxPrice) {
+        cout << "\nRooms in Price Range [" << minPrice << ", " << maxPrice << "]:\n";
+        for (Room* room : list_of_rooms) {
+            double price = room->getPricePerDay();
+            if (price >= minPrice && price <= maxPrice) {
+                room->displayInfo();
+            }
+        }
+    }
+};
+
+class Admin {
+private:
+    string username;
+    string password;
+    int adminLevel;
+
+public:
+    Admin(string user, string pass, int level)
+        : username(user), password(pass), adminLevel(level) {}
+
+    bool login() {
+        string inputPass;
+        int attempts = 3;
+
+        while (attempts--) {
+            cout << "Enter password for admin (" << username << "): ";
+            cin >> inputPass;
+
+            if (inputPass == password) {
+                cout << "Login successful!\n";
+                return true;
+            } else {
+                cout << "Incorrect password. ";
+                if (attempts > 0)
+                    cout << "Try again.\n";
+            }
+        }
+
+        cout << "Access denied after multiple attempts.\n";
+        return false;
+    }
+
+    void displayAdminDetails() const {
+        cout << "Admin Username: " << username << endl;
+        cout << "Admin Level: " << adminLevel << endl;
+    }
+
+    string getUsername() const {
+        return username;
+    }
+
+    int getAdminLevel() const {
+        return adminLevel;
+    }
+
+    void addNewRoom(Hotel& hotel) {
+    int number;
+    double price, serviceFee, tax;
+    string type;
+
+    cout << "Enter Room Number: ";
+    cin >> number;
+    cout << "Enter Room Type (Deluxe/Suite): ";
+    cin >> type;
+    cout << "Enter Price Per Day: ";
+    cin >> price;
+    cout << "Enter Service Fee: ";
+    cin >> serviceFee;
+    cout << "Enter Luxury Tax: ";
+    cin >> tax;
+
+    Room* newRoom = nullptr;
+    if (type == "Deluxe") {
+        newRoom = new DeluxeRoom(number, price, serviceFee, tax);
+    } else if (type == "Suite") {
+        newRoom = new SuiteRoom(number, price, serviceFee, tax);
+    }
+
+    if (newRoom) {
+        hotel.addRoom(newRoom);  // ✅ Now valid
+    } else {
+        cout << "Invalid room type.\n";
+    }
 }
 
 
-  
 
+
+};
+
+
+int main() {
+    Hotel myHotel;
+
+    // Create Deluxe Rooms (roomNumber, pricePerDay, serviceFee, luxuryTax)
+    Room* room1 = new DeluxeRoom(101, 150.0, 20.0, 15.0);
+    Room* room2 = new DeluxeRoom(102, 180.0, 25.0, 18.0);
+
+    // Add some features and complementary items for demonstration
+    room1->addFeature("WiFi");
+    room1->addFeature("Air Conditioning");
+    dynamic_cast<DeluxeRoom*>(room1)->addComplementaryItem("Free Breakfast");
+
+    room2->addFeature("Sea View");
+    room2->addFeature("Mini Bar");
+    dynamic_cast<DeluxeRoom*>(room2)->addComplementaryItem("Spa Access");
+
+    // Add rooms to hotel
+    myHotel.addRoom(room1);
+    myHotel.addRoom(room2);
+
+    // Create a customer (name, contact, id, bookedRoom(0 for now), daysOfStay, checkInDate, checkOutDate)
+    customer cust1("Alice", "555-1234", "ID001", 0, 3, "2025-06-10", "2025-06-13");
+
+    // Book a Deluxe room for customer Alice
+    myHotel.bookRoom(cust1, "Deluxe");
+
+    // List available rooms after booking
+    myHotel.listAvailableRooms();
+
+    // Generate customer report
+    myHotel.generateReport("customers");
+
+    // Generate booking report
+    myHotel.generateReport("bookings");
+
+    // Filter rooms by price range
+    myHotel.filterRoomsByPriceRange(100.0, 160.0);
+
+    // Check out customer Alice
+    myHotel.checkOutCustomer("Alice");
+
+    // List available rooms again after checkout
+    myHotel.listAvailableRooms();
+
+    // Clean up dynamically allocated memory
+    delete room1;
+    delete room2;
+
+
+    // Create an admin object
+    Admin admin1("admin", "1234", 2);
+
+    // Login prompt
+    if (admin1.login()) {
+        // Show details if login successful
+        admin1.displayAdminDetails();
+        cout << "✅ You can now access admin features here...\n";
+    } else {
+        cout << "🚫 Exiting system due to failed login.\n";
+    }
+
+
+    return 0;
+}
