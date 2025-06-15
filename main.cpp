@@ -5,7 +5,7 @@
 #include <limits>
 using namespace std;
 
-// Service Interface (Abstract Class)
+
 class Service {
 public:
     virtual ~Service() {}
@@ -16,7 +16,7 @@ public:
     }
 };
 
-// Derived Service Classes
+
 class LaundryService : public Service {
 private:
     string serviceType; // "Standard", "Express", "Dry Clean"
@@ -162,8 +162,8 @@ public:
              << " | Available: " << (isRoomAvailable() ? "Yes" : "No") << endl;
 
         cout << "  Features: ";
-        for (const auto& feature : getFeatures()) cout << feature << ", ";
-        cout << "\n";
+        for (const auto& feature : getFeatures()) {cout << feature << ", ";
+        cout << "\n";}
     }
 };
 
@@ -697,10 +697,10 @@ public:
 
         if (xorEncryptDecrypt(encryptedPassword) == input) {
             isLoggedIn = true;
-            cout << "✅ Login successful.\n";
+            cout << " Login successful.\n";
             return true;
         } else {
-            cout << "❌ Invalid password.\n";
+            cout << "Invalid password.\n";
             return false;
         }
     }
@@ -718,49 +718,49 @@ public:
         if (isLoggedIn)
             hotelRef->addRoom(room);
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << " Access denied. Please login first.\n";
     }
 
     void removeRoom(int roomNumber) {
         if (isLoggedIn)
             hotelRef->removeRoom(roomNumber);
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << "Access denied. Please login first.\n";
     }
 
     void modifyRoomPrice(int roomNumber, double newPrice) {
         if (isLoggedIn)
             hotelRef->modifyRoomPrice(roomNumber, newPrice);
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << " Access denied. Please login first.\n";
     }
 
     void generateOccupancyReport() {
         if (isLoggedIn)
             hotelRef->generateOccupancyReport();
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << "Access denied. Please login first.\n";
     }
 
     void generateReport(const string& reportType) {
         if (isLoggedIn)
             hotelRef->generateReport(reportType);
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << " Access denied. Please login first.\n";
     }
 
     void listAvailableRooms() {
         if (isLoggedIn)
             hotelRef->listAvailableRooms();
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << " Access denied. Please login first.\n";
     }
 
     void filterRoomsByPrice(double min, double max) {
         if (isLoggedIn)
             hotelRef->filterRoomsByPriceRange(min, max);
         else
-            cout << "🔒 Access denied. Please login first.\n";
+            cout << " Access denied. Please login first.\n";
     }
 };
 
@@ -801,77 +801,77 @@ double getValidDouble() {
 
 void displayMainMenu() {
     cout << "\n" << string(60, '=') << endl;
-    cout << "           🏨 HOTEL MANAGEMENT SYSTEM 🏨" << endl;
+    cout << "            HOTEL MANAGEMENT SYSTEM " << endl;
     cout << string(60, '=') << endl;
-    cout << "1. 👤 Admin Panel" << endl;
-    cout << "2. 🛎️  Customer Services" << endl;
-    cout << "3. 📊 View Reports" << endl;
-    cout << "4. ❌ Exit" << endl;
+    cout << "1.  Admin Panel" << endl;
+    cout << "2.  Customer Services" << endl;
+    cout << "3.  View Reports" << endl;
+    cout << "4.  Exit" << endl;
     cout << string(60, '=') << endl;
     cout << "Enter your choice: ";
 }
 
 void displayAdminMenu() {
     cout << "\n" << string(50, '=') << endl;
-    cout << "            👤 ADMIN PANEL" << endl;
+    cout << "             ADMIN PANEL" << endl;
     cout << string(50, '=') << endl;
-    cout << "1. 🏠 Room Management" << endl;
-    cout << "2. 📊 Generate Reports" << endl;
-    cout << "3. 👥 Customer Management" << endl;
-    cout << "4. 🔓 Logout" << endl;
-    cout << "5. ⬅️  Back to Main Menu" << endl;
+    cout << "1.  Room Management" << endl;
+    cout << "2.  Generate Reports" << endl;
+    cout << "3.  Customer Management" << endl;
+    cout << "4.  Logout" << endl;
+    cout << "5.  Back to Main Menu" << endl;
     cout << string(50, '=') << endl;
     cout << "Enter your choice: ";
 }
 
 void displayRoomManagementMenu() {
     cout << "\n" << string(50, '=') << endl;
-    cout << "          🏠 ROOM MANAGEMENT" << endl;
+    cout << "           ROOM MANAGEMENT" << endl;
     cout << string(50, '=') << endl;
-    cout << "1. ➕ Add New Room" << endl;
-    cout << "2. ❌ Remove Room" << endl;
-    cout << "3. 💰 Modify Room Price" << endl;
-    cout << "4. 📋 List All Rooms" << endl;
-    cout << "5. 🔍 Filter Rooms by Price" << endl;
-    cout << "6. ⬅️  Back to Admin Panel" << endl;
+    cout << "1.  Add New Room" << endl;
+    cout << "2.  Remove Room" << endl;
+    cout << "3.  Modify Room Price" << endl;
+    cout << "4.  List All Rooms" << endl;
+    cout << "5.  Filter Rooms by Price" << endl;
+    cout << "6.️  Back to Admin Panel" << endl;
     cout << string(50, '=') << endl;
     cout << "Enter your choice: ";
 }
 
 void displayCustomerMenu() {
     cout << "\n" << string(50, '=') << endl;
-    cout << "          🛎️ CUSTOMER SERVICES" << endl;
+    cout << "           CUSTOMER SERVICES" << endl;
     cout << string(50, '=') << endl;
-    cout << "1. 🏨 Book a Room" << endl;
-    cout << "2. 🛎️  Add Services" << endl;
-    cout << "3. 🚪 Check Out" << endl;
-    cout << "4. 📋 View Available Rooms" << endl;
-    cout << "5. ⬅️  Back to Main Menu" << endl;
+    cout << "1.  Book a Room" << endl;
+    cout << "2.  Add Services" << endl;
+    cout << "3.  Check Out" << endl;
+    cout << "4.  View Available Rooms" << endl;
+    cout << "5.  Back to Main Menu" << endl;
     cout << string(50, '=') << endl;
     cout << "Enter your choice: ";
 }
 
 void displayReportsMenu() {
     cout << "\n" << string(50, '=') << endl;
-    cout << "            📊 REPORTS" << endl;
+    cout << "             REPORTS" << endl;
     cout << string(50, '=') << endl;
-    cout << "1. 👥 Customer Report" << endl;
-    cout << "2. 📝 Booking Report" << endl;
-    cout << "3. 🏠 Room Report" << endl;
-    cout << "4. 📈 Occupancy Report" << endl;
-    cout << "5. ⬅️  Back to Main Menu" << endl;
+    cout << "1.  Customer Report" << endl;
+    cout << "2.  Booking Report" << endl;
+    cout << "3.  Room Report" << endl;
+    cout << "4.  Occupancy Report" << endl;
+    cout << "5.   Back to Main Menu" << endl;
     cout << string(50, '=') << endl;
     cout << "Enter your choice: ";
 }
 
 void displayServiceMenu() {
     cout << "\n" << string(50, '=') << endl;
-    cout << "          🛎️ ADDITIONAL SERVICES" << endl;
+    cout << "           ADDITIONAL SERVICES" << endl;
     cout << string(50, '=') << endl;
-    cout << "1. 🧺 Laundry Service" << endl;
-    cout << "2. 🍽️  Meal Service" << endl;
-    cout << "3. 🚗 Transport Service" << endl;
-    cout << "4. ⬅️  Back to Customer Menu" << endl;
+    cout << "1.  Laundry Service" << endl;
+    cout << "2.  Meal Service" << endl;
+    cout << "3.  Transport Service" << endl;
+    cout << "4.  Back to Customer Menu" << endl;
     cout << string(50, '=') << endl;
     cout << "Enter your choice: ";
 }
@@ -1329,7 +1329,7 @@ int main() {
     Hotel myHotel;
     Admin admin("admin1", 1, &myHotel);
 
-    cout << "🏨 Welcome to Hotel Management System! 🏨\n";
+    cout << "Welcome to Hotel Management System! \n";
     cout << "Please set up your system first by adding rooms through Admin Panel.\n";
     pauseScreen();
 
@@ -1340,13 +1340,13 @@ int main() {
         mainChoice = getValidInt();
 
         switch (mainChoice) {
-            case 1: // Admin Panel
+            case 1:
                 handleAdminPanel(admin, myHotel);
                 break;
-            case 2: // Customer Services
+            case 2:
                 handleCustomerServices(myHotel);
                 break;
-            case 3: // View Reports
+            case 3:
                 if (!admin.isAuthenticated()) {
                     cout << "Admin authentication required for reports.\n";
                     pauseScreen();
@@ -1354,12 +1354,12 @@ int main() {
                     handleReports(admin);
                 }
                 break;
-            case 4: // Exit
-                cout << "\n🙏 Thank you for using Hotel Management System!\n";
-                cout << "Goodbye! 👋\n";
+            case 4:
+                cout << "\n Thank you for using Hotel Management System!\n";
+                cout << "Goodbye! \n";
                 break;
             default:
-                cout << "❌ Invalid choice! Please try again.\n";
+                cout << " Invalid choice! Please try again.\n";
                 pauseScreen();
         }
     } while (mainChoice != 4);
